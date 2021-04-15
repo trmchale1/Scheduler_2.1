@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane layoutX="200.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <AnchorPane layoutX="-73.0" layoutY="-76.0" prefHeight="357.0" prefWidth="361.0">
+               <children>
+                  <Label layoutX="-1.0" layoutY="3.0" text="Add Customer">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="20.0" layoutY="47.0" text="Customer ID" />
+                  <TextField fx:id="customer_id" editable="false" layoutX="100.0" layoutY="42.0" prefHeight="27.0" prefWidth="214.0" style="-fx-background-color: cdcdcd;"/>
+                  <TextField fx:id="customer_name" layoutX="100.0" layoutY="87.0" prefHeight="27.0" prefWidth="214.0" />
+                  <TextField fx:id="address" layoutX="94.0" layoutY="135.0" prefHeight="27.0" prefWidth="214.0" />
+                  <TextField fx:id="postal_code" layoutX="94.0" layoutY="183.0" prefHeight="27.0" prefWidth="214.0" />
+                  <TextField fx:id="phone" layoutX="94.0" layoutY="231.0" prefHeight="27.0" prefWidth="214.0" />
+                  <Label layoutY="92.0" text="Customer Name" />
+                  <Label layoutX="22.0" layoutY="140.0" text="Address" />
+                  <Label layoutX="39.0" layoutY="188.0" text="Postal" />
+                  <Label layoutX="39.0" layoutY="236.0" text="Phone" />
+                  <Label layoutX="39.0" layoutY="277.0" text="Division" />
+                  <Label layoutX="39.0" layoutY="318.0" text="Country" />
+                  <ChoiceBox fx:id="choice_div" layoutX="94.0" layoutY="272.0" prefHeight="27.0" prefWidth="214.0" />
+                  <ChoiceBox fx:id="choice_count" layoutX="94.0" layoutY="313.0" prefHeight="27.0" prefWidth="214.0" />
+               </children>
+            </AnchorPane>
+         </children></AnchorPane>
+      <Button layoutX="488.0" layoutY="65.0" mnemonicParsing="false" onAction="#saveCustomer" text="Save" />
+      <Button layoutX="488.0" layoutY="161.0" mnemonicParsing="false" onAction="#exitAddCustomer" text="Exit" />
+   </children>
+</AnchorPane>

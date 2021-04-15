@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TableView fx:id="apptTable" prefHeight="400.0" prefWidth="482.0">
+        <columns>
+          <TableColumn fx:id="appointment_id" prefWidth="37.0" text="Appointment_ID" />
+          <TableColumn fx:id="title" prefWidth="28.0" text="Title" />
+            <TableColumn fx:id="description" prefWidth="33.0" text="Description" />
+            <TableColumn fx:id="location" prefWidth="33.0" text="Location" />
+            <TableColumn fx:id="type" prefWidth="29.0" text="Type" />
+            <TableColumn fx:id="start" prefWidth="37.0" text="Start" />
+            <TableColumn fx:id="end" prefWidth="51.0" text="End" />
+            <TableColumn fx:id="customer_id" prefWidth="237.0" text="Customer_ID" />
+        </columns>
+      </TableView>
+      <Button layoutX="484.0" layoutY="33.0" mnemonicParsing="false" onAction="#addAppointments" prefHeight="27.0" prefWidth="113.0" text="Add Appointments" />
+      <Button layoutX="483.0" layoutY="164.0" mnemonicParsing="false" onAction="#viewCustomers" prefHeight="27.0" prefWidth="113.0" text="View Customers" />
+      <Button layoutX="484.0" layoutY="78.0" mnemonicParsing="false" onAction="#editAppointment" text="Edit Appointment" />
+      <Button layoutX="484.0" layoutY="124.0" mnemonicParsing="false" onAction="#deleteCustApp" prefHeight="27.0" prefWidth="113.0" text="Delete Appointment" />
+      <RadioButton fx:id="rad_week" layoutX="490.0" layoutY="244.0" mnemonicParsing="false" onAction="#radWeekAct" text="Weekly" />
+      <RadioButton fx:id="rad_month" layoutX="488.0" layoutY="271.0" mnemonicParsing="false" onAction="#radMonthAct" text="Monthly" />
+      <Button layoutX="484.0" layoutY="200.0" mnemonicParsing="false" onAction="#CustomerReports" prefHeight="27.0" prefWidth="113.0" text="Customer Reports" />
+      <Button layoutX="488.0" layoutY="299.0" mnemonicParsing="false" onAction="#ContactReports" prefHeight="27.0" prefWidth="104.0" text="Contact Reports" />
+      <Button layoutX="488.0" layoutY="359.0" mnemonicParsing="false" onAction="#userReports" prefHeight="27.0" prefWidth="104.0" text="User Reports" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <AnchorPane prefHeight="401.0" prefWidth="600.0">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="215.0" layoutY="14.0" prefHeight="26.0" prefWidth="171.0" text="User Schedule">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Label>
+                <TableView fx:id="table_con1" layoutX="14.0" layoutY="101.0" prefHeight="200.0" prefWidth="548.0">
+                    <columns>
+                        <TableColumn fx:id="appointment_id" prefWidth="75.0" text="appointment_id" />
+                        <TableColumn fx:id="title" prefWidth="75.0" text="title" />
+                        <TableColumn fx:id="type" prefWidth="75.0" text="type" />
+                        <TableColumn fx:id="description" prefWidth="75.0" text="description" />
+                        <TableColumn fx:id="start" prefWidth="75.0" text="start" />
+                        <TableColumn fx:id="end" prefWidth="75.0" text="end" />
+                        <TableColumn fx:id="customer_id" prefWidth="75.0" text="customer_id" />
+                    </columns>
+                </TableView>
+                <RadioButton fx:id="rad_1" layoutX="170.0" layoutY="344.0" mnemonicParsing="false" onAction="#radcon1" text="test" />
+                <RadioButton fx:id="rad_2" layoutX="300.0" layoutY="344.0" mnemonicParsing="false" onAction="#radcon2" text="admin" />
+            <Button layoutX="430.0" layoutY="340.0" mnemonicParsing="false" onAction="#onBack" prefHeight="27.0" prefWidth="121.0" text="Back" />
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>
