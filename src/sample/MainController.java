@@ -88,6 +88,7 @@ public class MainController implements Initializable {
             return;
         }
         try {
+            reminder();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/CustomerTable.fxml"));
             CustomerTable controller = new CustomerTable();
             loader.setController(controller);
@@ -232,14 +233,26 @@ public class MainController implements Initializable {
         LocalDateTime nowPlus15Min = now.plusMinutes(15);
         Appointments b = new Appointments();
         int x = 0;
+        int temp = 0;
+        if(user_field.getText().trim() == "test"){
+            temp = 1;
+        } else if (user_field.getText().trim() == "admin"){
+            temp = 2;
+        } else {
+
+        }
         for(Appointments a : appointmentList){
-            if(a.getStart().toLocalDateTime().isAfter(now.minusMinutes(1)) && a.getStart().toLocalDateTime().isBefore(nowPlus15Min)){
+            if(a.getStart().toLocalDateTime().isAfter(now.minusMinutes(1)) && a.getStart().toLocalDateTime().isBefore(nowPlus15Min) && a.getUser_id() == temp){
                 x = x + 1;
                 b = a;
             }
         }
         if (x == 0) {
-            return;
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Upcoming Appointment Reminder");
+            alert.setHeaderText("Reminder: ");
+            alert.setContentText("You have no appointments coming up");
+            alert.showAndWait();
         } else {
             Integer appt_id = b.getAppointment_id();
             Timestamp start = b.getStart();

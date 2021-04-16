@@ -14,9 +14,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import java.time.*;
 import java.util.*;
-import java.time.LocalDate;
-import java.time.Period;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
@@ -112,13 +111,14 @@ public class ViewAppointment implements Initializable {
     public void fillWeekMonth(){
         appointmentSet = ai.getAllAppointments();
         for (Appointments a : appointmentSet) {
+            System.out.println(a.getStart().toLocalDateTime().toLocalDate().getMonth());
+            System.out.println(LocalDate.now().getMonth());
             if (a.getStart().toLocalDateTime().toLocalDate().getMonth() == LocalDate.now().getMonth()) {
                 appointmentSetMonth.add(a);
             }
         }
         for (Appointments a : appointmentSet) {
             Period between = Period.between(a.getStart().toLocalDateTime().toLocalDate(), LocalDate.now());
-            System.out.println(a.getAppointment_id() + " " + between.getDays());
             if (between.getDays() < 7 && between.getMonths() == 0 && between.getDays() > -7) {
                 appointmentSetWeek.add(a);
             }

@@ -108,15 +108,6 @@ public class EditAppointment implements Initializable {
         ZoneId zone = ZoneId.systemDefault();
         Timestamp start = apt.getStart();
         Timestamp end = apt.getEnd();
-/*        ZonedDateTime newzdtStart = start.toLocalDateTime().atZone(ZoneId.of("UTC"));
-        ZonedDateTime newLocalStart = newzdtStart.withZoneSameInstant(zone);
-        ZonedDateTime newzdtEnd = end.toLocalDateTime().atZone(ZoneId.of("UTC"));
-        ZonedDateTime newLocalEnd = newzdtEnd.withZoneSameInstant(zone);
-        LocalDateTime startDT = newLocalStart.toLocalDateTime();
-        LocalDateTime endDT = newLocalEnd.toLocalDateTime();
-        Timestamp fnStart = Timestamp.valueOf(startDT);
-        Timestamp fnEnd = Timestamp.valueOf(endDT);
-*/
         try {
             Date dateStart = new Date(start.getTime());
             Date dateEnd = new Date(end.getTime());
@@ -275,27 +266,14 @@ public class EditAppointment implements Initializable {
     }
 
     /**
-     * tests if the day is a weekend
-     * @param currentDate
-     * @return
-     */
-    private boolean testDateWeekend(LocalDate currentDate){
-        boolean local = true;
-        if(currentDate.getDayOfWeek() == DayOfWeek.SUNDAY || currentDate.getDayOfWeek() == DayOfWeek.SATURDAY){
-            local = errorWindow(1);
-        }
-        return local;
-    }
-
-    /**
      * tests if the appointment is between 8am and 10pm
      * @param current_time
      * @return
      */
     private boolean testOfficeHours(LocalTime current_time){
         boolean local = true;
-        LocalTime time1 = LocalTime.of(8, 00, 00);
-        LocalTime time2 = LocalTime.of(22, 00, 00);
+        LocalTime time1 = LocalTime.of(7, 00, 00);
+        LocalTime time2 = LocalTime.of(21, 00, 00);
         boolean morn = current_time.isBefore(time1);
         boolean aft = current_time.isAfter(time2);
         if( morn == true || aft == true ){
@@ -398,6 +376,14 @@ public class EditAppointment implements Initializable {
         return true;
     }
 
+    private String checkTwoDigits(String temp){
+        if(temp.length() == 1){
+            return ("0" + temp);
+        } else {
+            return temp;
+        }
+    }
+
     /**
      * saves the appointment that has been edited
      * @param event
@@ -419,33 +405,54 @@ public class EditAppointment implements Initializable {
             String con_temp = (String) choice_con.getValue();
             LocalDate sDate = startDate.getValue();
             LocalDate eDate = endDate.getValue();
-            boolean wk1,wk2;
-            wk1 = testDateWeekend(sDate);
-            wk2 = testDateWeekend(eDate);
-            if(wk1 == false || wk2 == false ){
-                return;
-            }
-            String sTime = (String) startHour.getText() + ":" + startMinutes.getText();
-            String eTime = (String) endHour.getText() + ":" + endMinutes.getText();
-            System.out.println(sTime);
-            System.out.println(eTime);
+            String tempsHour = (String) startHour.getText();
+            String tempeHour = (String) endHour.getText();
+            String tempsMin = (String) startMinutes.getText();
+            String tempeMin = (String) endMinutes.getText();
+            tempsHour = checkTwoDigits(tempsHour);
+            tempeHour = checkTwoDigits(tempeHour);
+            tempsMin = checkTwoDigits(tempsMin);
+            tempeMin = checkTwoDigits(tempeMin);
+            String sTime = (String) tempsHour + ":" + tempsMin;
+            String eTime = (String) tempeHour + ":" + tempeMin;
             LocalTime sTime_formatted = LocalTime.parse(sTime);
             LocalTime eTime_formatted = LocalTime.parse(eTime);
-            System.out.println(sTime_formatted);
-            System.out.println(eTime_formatted);
-            boolean tst1, tst2, tst3, tst4;
-            tst3 = testTimes(sTime_formatted);
-            tst4 = testTimes(eTime_formatted);
-            tst1 = testOfficeHours(sTime_formatted);
-            tst2 = testOfficeHours(eTime_formatted);
-            if(tst1 == false || tst2 == false || tst3 == false || tst4 == false){
-                return;
-            }
             LocalDateTime s = LocalDateTime.of(sDate,sTime_formatted);
             LocalDateTime e = LocalDateTime.of(eDate,eTime_formatted);
             Timestamp stimestamp = Timestamp.valueOf(s);
             Timestamp etimestamp = Timestamp.valueOf(e);
-            boolean tm1 = searchCustApt(app_id,cust_id,stimestamp,etimestamp);
+
+            ZoneId zone = ZoneId.systemDefault();
+            ZonedDateTime CSTstart = stimestamp.toLocalDateTime().atZone(zone);
+            ZonedDateTime UTCstart = CSTstart.withZoneSameInstant(ZoneId.of("UTC"));
+            ZonedDateTime CSTend = etimestamp.toLocalDateTime().atZone(zone);
+            ZonedDateTime UTCend = CSTend.withZoneSameInstant(ZoneId.of("UTC"));
+            LocalDateTime CSTstartl = CSTstart.toLocalDateTime();
+            LocalDateTime CSTendl = CSTend.toLocalDateTime();
+            LocalDateTime UTCLocalStart = UTCstart.toLocalDateTime();
+            LocalDateTime UTCLocalEnd = UTCend.toLocalDateTime();
+            Timestamp fnStart = Timestamp.valueOf(UTCLocalStart);
+            Timestamp fnEnd = Timestamp.valueOf(UTCLocalEnd);
+
+            Timestamp CSTstampstart = Timestamp.valueOf(CSTstartl);
+            Timestamp CSTstampend = Timestamp.valueOf(CSTendl);
+// Tests
+            // LocalDateTime to LocalDate
+            LocalDate CSTdatestart = CSTstartl.toLocalDate();
+            LocalDate CSTdateend = CSTendl.toLocalDate();
+            // LocalDateTime to LocalTime
+            LocalTime CSTstarttime = CSTstartl.now().toLocalTime();
+            LocalTime CSTendtime = CSTendl.now().toLocalTime();
+
+            boolean tst1, tst2, tst3, tst4;
+            tst3 = testTimes(CSTstarttime);
+            tst4 = testTimes(CSTendtime);
+            tst1 = testOfficeHours(CSTstarttime);
+            tst2 = testOfficeHours(CSTendtime);
+            if(tst1 == false || tst2 == false || tst3 == false || tst4 == false){
+                return;
+            }
+            boolean tm1 = searchCustApt(app_id,cust_id,CSTstampstart,CSTstampend);
             if(tm1 == false){return;}
             int con_id = 0;
             for(Contacts c : contactCollection){
@@ -461,8 +468,8 @@ public class EditAppointment implements Initializable {
             stmt.setString(2, descrip);
             stmt.setString(3, loc);
             stmt.setString(4, typ);
-            stmt.setTimestamp(5, stimestamp);
-            stmt.setTimestamp(6,etimestamp);
+            stmt.setTimestamp(5, fnStart);
+            stmt.setTimestamp(6,fnEnd);
             stmt.setTimestamp(7, new Timestamp(System.currentTimeMillis()));
             stmt.setString(8, created_by);
             stmt.setTimestamp(9, new Timestamp(System.currentTimeMillis()));

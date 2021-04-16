@@ -251,27 +251,14 @@ public class AddAppointment implements Initializable {
     }
 
     /**
-     * Tests if the date is a weekend
-     * @param currentDate
-     * @return
-     */
-    private boolean testDateWeekend(LocalDate currentDate){
-        boolean local = true;
-        if(currentDate.getDayOfWeek() == DayOfWeek.SUNDAY || currentDate.getDayOfWeek() == DayOfWeek.SATURDAY){
-           local = errorWindow(1);
-        }
-        return local;
-    }
-
-    /**
      * Tests if the appointment is between 8am and 10pm
      * @param current_time
      * @return
      */
     private boolean testOfficeHours(LocalTime current_time){
         boolean local = true;
-        LocalTime time1 = LocalTime.of(8, 00, 00);
-        LocalTime time2 = LocalTime.of(22, 00, 00);
+        LocalTime time1 = LocalTime.of(9, 00, 00);
+        LocalTime time2 = LocalTime.of(23, 00, 00);
         boolean morn = current_time.isBefore(time1);
         boolean aft = current_time.isAfter(time2);
         if( morn == true || aft == true ){
@@ -300,47 +287,47 @@ public class AddAppointment implements Initializable {
      * @param end new appointment to check
      * @return true / false if appointments conflict
      */
-    private boolean searchCustApt(int cust_id, Timestamp start, Timestamp end){
+    private boolean searchCustApt(int app_id,int cust_id, Timestamp start, Timestamp end){
         for(Appointments a : appointments){
-            if(a.getCustomer_id() == cust_id){
+            if(a.getCustomer_id() == cust_id && a.getAppointment_id() != app_id){
                 if (start.before(a.getStart()) && end.after(a.getEnd())) {
-                    System.out.println(a.getCustomer_id() + "Start: " + start + " before a.getStart: " + a.getStart() + " AND end: " + end + " after a.getEnd: " + a.getEnd());
-                    System.out.println("Return false - appointment outside another appointment");
+ //                   System.out.println(a.getCustomer_id() + "Start: " + start + " before a.getStart: " + a.getStart() + " AND end: " + end + " after a.getEnd: " + a.getEnd());
+ //                   System.out.println("Return false - appointment outside another appointment");
                     errorWindow(3);
                     return false;
                 } else if (start.after(a.getStart()) && end.before(a.getEnd())) {
-                    System.out.println(a.getCustomer_id() + "Start: " + start + " after a.getStart: " + a.getStart() + " AND end: " + end + " before a.getEnd: " + a.getEnd());
-                    System.out.println("Return false - appointment inside another appointment");
+ //                   System.out.println(a.getCustomer_id() + "Start: " + start + " after a.getStart: " + a.getStart() + " AND end: " + end + " before a.getEnd: " + a.getEnd());
+  //                  System.out.println("Return false - appointment inside another appointment");
                     errorWindow(3);
                     return false;
                 } else if (start.before(a.getStart()) && end.after(a.getStart()) && end.before(a.getEnd())) {
-                    System.out.println(a.getCustomer_id() + "Start: " + start + " before a.getStart: " + a.getStart() + " AND end: " + end + " after a.getStart: " + a.getStart() + " AND end: " + end + " before a.getEnd: " + a.getEnd());
-                    System.out.println("Return false - to the left");
+  //                  System.out.println(a.getCustomer_id() + "Start: " + start + " before a.getStart: " + a.getStart() + " AND end: " + end + " after a.getStart: " + a.getStart() + " AND end: " + end + " before a.getEnd: " + a.getEnd());
+  //                  System.out.println("Return false - to the left");
                     errorWindow(3);
                     return false;
                 } else if (start.after(a.getStart()) && start.before(a.getEnd()) && end.after(a.getEnd())) {
-                    System.out.println(a.getCustomer_id() + "Start: " + start + " after a.getStart: " + a.getStart() + " AND start: " + start + " before a.getEnd: " + a.getEnd() + " AND " + end + " after a.getEnd() " + a.getEnd());
-                    System.out.println("Return false - to the right");
+  //                  System.out.println(a.getCustomer_id() + "Start: " + start + " after a.getStart: " + a.getStart() + " AND start: " + start + " before a.getEnd: " + a.getEnd() + " AND " + end + " after a.getEnd() " + a.getEnd());
+  //                  System.out.println("Return false - to the right");
                     errorWindow(3);
                     return false;
                 } else if (a.getStart().after(a.getEnd())) {
-                    System.out.println("Starts after the end - return false");
+   //                 System.out.println("Starts after the end - return false");
                     errorWindow(4);
                     return false;
                 } else if (start.equals(a.getStart()) || end.equals(a.getEnd())) {
-                    System.out.println("Starts or ends equal - return false");
+  //                  System.out.println("Starts or ends equal - return false");
                     errorWindow(3);
                     return false;
                 } else if(start.before(a.getStart()) && end.before(a.getStart())){
-                    System.out.println("Customer ID: " + a.getCustomer_id() + " Start: " + start + " before a.getStart: " + a.getStart() + " AND end: " + end + " before a.getStart(): " + a.getStart());
-                    System.out.println("Good - before current appt");
+//                    System.out.println("Customer ID: " + a.getCustomer_id() + " Start: " + start + " before a.getStart: " + a.getStart() + " AND end: " + end + " before a.getStart(): " + a.getStart());
+ //                   System.out.println("Good - before current appt");
                 } else if ((start.after(a.getEnd()) && end.after(a.getEnd())) ) {
-                    System.out.println("Customer ID: " + a.getCustomer_id() + " Start: " + start + " after a.getStart: " + a.getEnd() + " AND end: " + end + " after a.getStart(): " + a.getEnd());
-                    System.out.println("Good - after current appt");
+//                    System.out.println("Customer ID: " + a.getCustomer_id() + " Start: " + start + " after a.getStart: " + a.getEnd() + " AND end: " + end + " after a.getStart(): " + a.getEnd());
+//                    System.out.println("Good - after current appt");
                 } else if (start.equals(a.getStart()) || end.equals(a.getEnd())) {
 
                 } else {
-                    System.out.println("Some other case");
+//                    System.out.println("Some other case");
                 }
             }
         }
@@ -376,10 +363,19 @@ public class AddAppointment implements Initializable {
         return true;
     }
 
-    /**
-     * saves an appointment that has been input
-     * @param event
-     */
+    private String checkTwoDigits(String temp){
+        if(temp.length() == 1){
+            return ("0" + temp);
+        } else {
+            return temp;
+        }
+    }
+
+        /**
+         * saves an appointment that has been input
+         * @param event
+         */
+
     @FXML
     private void saveAppointment(Event event){
         Appointments appt;
@@ -398,31 +394,59 @@ public class AddAppointment implements Initializable {
             String con_temp = (String) choice_con.getValue();
             LocalDate sDate = this.startDate.getValue();
             LocalDate eDate = this.endDate.getValue();
-            boolean wk1,wk2;
-            wk1 = testDateWeekend(sDate);
-            wk2 = testDateWeekend(eDate);
-            if(wk1 == false || wk2 == false ){
-                return;
-            }
-            String sTime = (String) startHour.getText() + ":" + startMinutes.getText();
-            String eTime = (String) endHour.getText() + ":" + endMinutes.getText();
-
+            String tempsHour = (String) startHour.getText();
+            String tempeHour = (String) endHour.getText();
+            String tempsMin = (String) startMinutes.getText();
+            String tempeMin = (String) endMinutes.getText();
+            tempsHour = checkTwoDigits(tempsHour);
+            tempeHour = checkTwoDigits(tempeHour);
+            tempsMin = checkTwoDigits(tempsMin);
+            tempeMin = checkTwoDigits(tempeMin);
+            String sTime = (String) tempsHour + ":" + tempsMin;
+            String eTime = (String) tempeHour + ":" + tempeMin;
             LocalTime sTime_formatted = LocalTime.parse(sTime);
             LocalTime eTime_formatted = LocalTime.parse(eTime);
-
-            boolean tst1, tst2, tst3, tst4;
-            tst3 = testTimes(sTime_formatted);
-            tst4 = testTimes(eTime_formatted);
-            tst1 = testOfficeHours(sTime_formatted);
-            tst2 = testOfficeHours(eTime_formatted);
-            if(tst1 == false || tst2 == false || tst3 == false || tst4 == false){
-                return;
-            }
             LocalDateTime s = LocalDateTime.of(sDate,sTime_formatted);
             LocalDateTime e = LocalDateTime.of(eDate,eTime_formatted);
             Timestamp stimestamp = Timestamp.valueOf(s);
             Timestamp etimestamp = Timestamp.valueOf(e);
-            boolean tm1 = searchCustApt(cust_id,stimestamp,etimestamp);
+            ZoneId zone = ZoneId.systemDefault();
+            ZonedDateTime CSTstart = stimestamp.toLocalDateTime().atZone(zone);
+// print
+            ZonedDateTime UTCstart = CSTstart.withZoneSameInstant(ZoneId.of("UTC"));
+// print
+            ZonedDateTime CSTend = etimestamp.toLocalDateTime().atZone(zone);
+            ZonedDateTime UTCend = CSTend.withZoneSameInstant(ZoneId.of("UTC"));
+
+            LocalDateTime CSTstartl = CSTstart.toLocalDateTime();
+            LocalDateTime CSTendl = CSTend.toLocalDateTime();
+
+            LocalDateTime UTCLocalStart = UTCstart.toLocalDateTime();
+            LocalDateTime UTCLocalEnd = UTCend.toLocalDateTime();
+
+            Timestamp fnStart = Timestamp.valueOf(CSTstartl);
+            Timestamp fnEnd = Timestamp.valueOf(CSTendl);
+
+            Timestamp CSTstampstart = Timestamp.valueOf(CSTstartl);
+            Timestamp CSTstampend = Timestamp.valueOf(CSTendl);
+// Tests
+            // LocalDateTime to LocalDate
+            LocalDate CSTdatestart = CSTstartl.toLocalDate();
+            LocalDate CSTdateend = CSTendl.toLocalDate();
+            // LocalDateTime to LocalTime
+            LocalTime CSTstarttime = CSTstartl.now().toLocalTime();
+            LocalTime CSTendtime = CSTendl.now().toLocalTime();
+
+
+            boolean tst1, tst2, tst3, tst4;
+            tst1 = testOfficeHours(CSTstarttime);
+            tst2 = testOfficeHours(CSTendtime);
+            tst3 = testTimes(CSTstarttime);
+            tst4 = testTimes(CSTendtime);
+            if(tst1 == false || tst2 == false || tst3 == false || tst4 == false){
+                return;
+            }
+            boolean tm1 = searchCustApt(app_id,cust_id,CSTstampstart,CSTstampend);
             if(tm1 == false){return;}
             int con_id = 0;
             for(Contacts c : contactCollection){
@@ -439,8 +463,8 @@ public class AddAppointment implements Initializable {
             stmt.setString(3, descrip);
             stmt.setString(4, loc);
             stmt.setString(5, typ);
-            stmt.setTimestamp(6, stimestamp);
-            stmt.setTimestamp(7, etimestamp);
+            stmt.setTimestamp(6, fnStart);
+            stmt.setTimestamp(7, fnEnd);
             stmt.setTimestamp(8, new Timestamp(System.currentTimeMillis()));
             stmt.setString(9, created_by);
             stmt.setTimestamp(10, new Timestamp(System.currentTimeMillis()));

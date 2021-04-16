@@ -112,7 +112,6 @@ public class CustomerTable implements Initializable {
      * refreshTable() updates the table according to changes made in the model
      */
     private void refreshTable(){
-        System.out.println("refresh table");
         ObservableList<Customers> c = customerInventory.getAllCustomers();
         customerCollection.setAll(customerInventory.getAllCustomers());
         customerTable.setItems(customerCollection);
@@ -262,7 +261,6 @@ public class CustomerTable implements Initializable {
                 divisionsCollection.add(d);
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         } catch (Exception x) {
             x.printStackTrace();
