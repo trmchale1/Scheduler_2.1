@@ -111,8 +111,8 @@ public class ViewAppointment implements Initializable {
     public void fillWeekMonth(){
         appointmentSet = ai.getAllAppointments();
         for (Appointments a : appointmentSet) {
-            System.out.println(a.getStart().toLocalDateTime().toLocalDate().getMonth());
-            System.out.println(LocalDate.now().getMonth());
+//            System.out.println(a.getStart().toLocalDateTime().toLocalDate().getMonth());
+//            System.out.println(LocalDate.now().getMonth());
             if (a.getStart().toLocalDateTime().toLocalDate().getMonth() == LocalDate.now().getMonth()) {
                 appointmentSetMonth.add(a);
             }

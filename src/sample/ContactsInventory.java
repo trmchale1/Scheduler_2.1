@@ -10,16 +10,29 @@ public class ContactsInventory {
 
     private ObservableList<Contacts> contactsInventory = FXCollections.observableArrayList();
 
+    /**
+     * adds contacts
+     * @param newContact Contact Object
+     */
     public void addContact(Contacts newContact){
         if(newContact!= null) {
             contactsInventory.add(newContact);
         }
     }
 
+    /**
+     * size of the contacts Inventory
+     * @return integer
+     */
     public int size(){
         return contactsInventory.size();
     }
 
+    /**
+     * looks up contacts by integer
+     * @param contactID integer
+     * @return
+     */
     public Contacts lookUpContacts(int contactID) {
         if (!contactsInventory.isEmpty()) {
             for (int i = 0; i < contactsInventory.size(); i++) {
@@ -31,6 +44,11 @@ public class ContactsInventory {
         return null;
     }
 
+    /**
+     * updates contact based on object
+     * @param index integer
+     * @param selectedContact Contact object
+     */
     public void updateContact(int index,Contacts selectedContact) {
         for (int i = 0; i < contactsInventory.size(); i++) {
             if (contactsInventory.get(i).getContact_id() == selectedContact.getContact_id()) {
@@ -41,6 +59,11 @@ public class ContactsInventory {
         return;
     }
 
+    /**
+     * deletes contacts
+     * @param c Contact objects
+     * @return
+     */
     public boolean deleteContacts(Contacts c) {
         for (int i = 0; i < contactsInventory.size(); i++) {
             if (contactsInventory.get(i).getContact_id() == c.getContact_id()) {
@@ -51,6 +74,10 @@ public class ContactsInventory {
         return false;
     }
 
+    /**
+     * gets all contacts in the inventory
+     * @return returns an ObservableList of Contacts
+     */
     public ObservableList<Contacts> getAllContacts() {
         return contactsInventory;
     }

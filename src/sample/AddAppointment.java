@@ -257,8 +257,9 @@ public class AddAppointment implements Initializable {
      */
     private boolean testOfficeHours(LocalTime current_time){
         boolean local = true;
-        LocalTime time1 = LocalTime.of(9, 00, 00);
-        LocalTime time2 = LocalTime.of(23, 00, 00);
+        System.out.println(current_time);
+        LocalTime time1 = LocalTime.of(7, 00, 00);
+        LocalTime time2 = LocalTime.of(21, 00, 00);
         boolean morn = current_time.isBefore(time1);
         boolean aft = current_time.isAfter(time2);
         if( morn == true || aft == true ){
@@ -334,7 +335,11 @@ public class AddAppointment implements Initializable {
                 return true;
     }
 
-
+    /**
+     * tests the customer ID to make sure it is a known customer
+     * @param test integer for id
+     * @return
+     */
     private boolean testCust_ID(int test){
          ObservableList<Customers> c = custInv.getAllCustomers();
          for (Customers a : c){
@@ -346,6 +351,13 @@ public class AddAppointment implements Initializable {
         errorWindow(5);
         return false;
     }
+
+    /**
+     *  tests a time to make sure the integers are hours and minutes
+     *
+     * @param time LocalTime object
+     * @return
+     */
 
     private boolean testTimes(LocalTime time){
         if(time.getHour() >= 0 && time.getHour() < 24){
@@ -362,6 +374,12 @@ public class AddAppointment implements Initializable {
         }
         return true;
     }
+
+    /**
+     * checks if user inputs a single digit
+     * @param temp String
+     * @return
+     */
 
     private String checkTwoDigits(String temp){
         if(temp.length() == 1){
@@ -434,9 +452,13 @@ public class AddAppointment implements Initializable {
             LocalDate CSTdatestart = CSTstartl.toLocalDate();
             LocalDate CSTdateend = CSTendl.toLocalDate();
             // LocalDateTime to LocalTime
-            LocalTime CSTstarttime = CSTstartl.now().toLocalTime();
-            LocalTime CSTendtime = CSTendl.now().toLocalTime();
+            LocalTime CSTstarttime = CSTstartl.toLocalTime();
+            LocalTime CSTendtime = CSTendl.toLocalTime();
 
+            System.out.println(CSTstartl);
+            System.out.println(CSTendl);
+            System.out.println(CSTstarttime);
+            System.out.println(CSTendtime);
 
             boolean tst1, tst2, tst3, tst4;
             tst1 = testOfficeHours(CSTstarttime);
@@ -483,6 +505,10 @@ public class AddAppointment implements Initializable {
         ViewAppointment(event);
     }
 
+
+    /**
+     * populates the customer data structure
+     */
     public void popCustomers() {
         try {
             DBConnection db = new DBConnection();

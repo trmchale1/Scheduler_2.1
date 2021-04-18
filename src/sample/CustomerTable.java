@@ -330,6 +330,10 @@ public class CustomerTable implements Initializable {
         }
     }
 
+    /**
+     * inserts countries intro values
+     * @throws Exception if error
+     */
 
     public void dbScript() throws Exception {
         try {

@@ -431,6 +431,7 @@ public class EditAppointment implements Initializable {
             LocalDateTime CSTendl = CSTend.toLocalDateTime();
             LocalDateTime UTCLocalStart = UTCstart.toLocalDateTime();
             LocalDateTime UTCLocalEnd = UTCend.toLocalDateTime();
+
             Timestamp fnStart = Timestamp.valueOf(UTCLocalStart);
             Timestamp fnEnd = Timestamp.valueOf(UTCLocalEnd);
 
@@ -441,8 +442,8 @@ public class EditAppointment implements Initializable {
             LocalDate CSTdatestart = CSTstartl.toLocalDate();
             LocalDate CSTdateend = CSTendl.toLocalDate();
             // LocalDateTime to LocalTime
-            LocalTime CSTstarttime = CSTstartl.now().toLocalTime();
-            LocalTime CSTendtime = CSTendl.now().toLocalTime();
+            LocalTime CSTstarttime = CSTstartl.toLocalTime();
+            LocalTime CSTendtime = CSTendl.toLocalTime();
 
             boolean tst1, tst2, tst3, tst4;
             tst3 = testTimes(CSTstarttime);
@@ -468,8 +469,8 @@ public class EditAppointment implements Initializable {
             stmt.setString(2, descrip);
             stmt.setString(3, loc);
             stmt.setString(4, typ);
-            stmt.setTimestamp(5, fnStart);
-            stmt.setTimestamp(6,fnEnd);
+            stmt.setTimestamp(5, CSTstampstart);
+            stmt.setTimestamp(6,CSTstampend);
             stmt.setTimestamp(7, new Timestamp(System.currentTimeMillis()));
             stmt.setString(8, created_by);
             stmt.setTimestamp(9, new Timestamp(System.currentTimeMillis()));

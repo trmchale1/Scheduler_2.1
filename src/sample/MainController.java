@@ -184,6 +184,7 @@ public class MainController implements Initializable {
             alert.showAndWait();
             return true;
         }
+
         return true;
     }
 
@@ -208,6 +209,7 @@ public class MainController implements Initializable {
                 int customer_id = rs.getInt("Customer_ID");
                 int user_id = rs.getInt("User_ID");
                 int contact_id = rs.getInt("Contact_ID");
+/*
                 ZonedDateTime newzdtStart = start.toLocalDateTime().atZone(ZoneId.of("UTC"));
                 ZonedDateTime newLocalStart = newzdtStart.withZoneSameInstant(zone);
                 ZonedDateTime newzdtEnd = end.toLocalDateTime().atZone(ZoneId.of("UTC"));
@@ -216,7 +218,9 @@ public class MainController implements Initializable {
                 LocalDateTime endDT = newLocalEnd.toLocalDateTime();
                 Timestamp fnStart = Timestamp.valueOf(startDT);
                 Timestamp fnEnd = Timestamp.valueOf(endDT);
-                Appointments apptObject = new Appointments(appointment_id, title, description, location, type, fnStart, fnEnd, customer_id, user_id, contact_id);
+*/
+                System.out.println(start);
+                Appointments apptObject = new Appointments(appointment_id, title, description, location, type, start, end, customer_id, user_id, contact_id);
                 ai.addAppointment(apptObject);
             }
             appointmentList = ai.getAllAppointments();
@@ -234,14 +238,16 @@ public class MainController implements Initializable {
         Appointments b = new Appointments();
         int x = 0;
         int temp = 0;
-        if(user_field.getText().trim() == "test"){
+        System.out.println(user_field.getText().trim().equalsIgnoreCase("test"));
+        if(user_field.getText().trim().equalsIgnoreCase("test")){
             temp = 1;
-        } else if (user_field.getText().trim() == "admin"){
+        } else if (user_field.getText().trim().equalsIgnoreCase("admin")){
             temp = 2;
-        } else {
-
         }
+        System.out.println("List Size: " + appointmentList.size());
         for(Appointments a : appointmentList){
+            System.out.println(a.getStart());
+            System.out.println("temp value: " + temp);
             if(a.getStart().toLocalDateTime().isAfter(now.minusMinutes(1)) && a.getStart().toLocalDateTime().isBefore(nowPlus15Min) && a.getUser_id() == temp){
                 x = x + 1;
                 b = a;

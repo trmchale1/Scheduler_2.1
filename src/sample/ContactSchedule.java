@@ -155,7 +155,11 @@ public class ContactSchedule implements Initializable  {
             table_con1.setItems(con3);
         }
 
-        @FXML
+    /**
+     * sends user back to the View Appointment UI
+     * @param e
+     */
+    @FXML
         private void onBack(ActionEvent e){
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewAppointment.fxml"));

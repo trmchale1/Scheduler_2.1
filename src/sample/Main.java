@@ -19,12 +19,13 @@ import javafx.scene.control.Button;
  * Main starts the application
  */
 
-    //Correctly made time zone changes in Add Appointment, make those changes else where in the app
-    // The database is stored in UTC, after those results are read, they must be translated into local time before display, convert in AppointmentsInventory
-    //Main Controller throws incorrect popup
-
 public class Main extends Application {
 
+    /**
+     * starts the app
+     * @param primaryStage
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Scheduler");
@@ -38,6 +39,10 @@ public class Main extends Application {
        primaryStage.show();
     }
 
+    /**
+     * launches args
+     * @param args
+     */
 
     public static void main(String[] args) {
         launch(args);
